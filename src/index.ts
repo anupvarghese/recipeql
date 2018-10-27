@@ -1,11 +1,22 @@
 import express from "express";
+import graphqlHttp from 'express-graphql';
+import schema from './schema';
 
 const app = express();
+
 const port = 3000;
 
-app.get("/", (_, res) => {
-  res.send("Hellllllloooo");
-});
+const root = {
+  hello: () => {
+    return "Hello world";
+  },
+};
+
+app.use("/graphiql", graphqlHttp({
+  schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
 app.listen(3000, () => {
   // tslint:disable-next-line
