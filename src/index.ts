@@ -6,18 +6,11 @@ const app = express();
 
 const port = 3000;
 
-const root = {
-  hello: () => {
-    return "Hello world";
-  }
-};
-
 app.use(
   "/graphiql",
   graphqlHttp({
-    schema,
-    rootValue: root,
-    graphiql: true
+    graphiql: true,
+    schema
   })
 );
 
