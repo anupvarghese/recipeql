@@ -9,7 +9,7 @@ const port = 3000;
 const root = {
   hello: () => {
     return "Hello world";
-  },
+  }
 };
 
 app.use(

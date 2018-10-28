@@ -1,19 +1,25 @@
-import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLSchema } from "graphql";
+import {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLList,
+  GraphQLSchema
+} from "graphql";
 
 interface queryArgs {
-  ingredients: Array<String>
+  ingredients: Array<String>;
 }
 
-const recipeType = new GraphQLList(new GraphQLObjectType({
-  name: 'recipe',
-  fields: () => ({
-    title: { type: GraphQLString },
-    href: { type: GraphQLString },
-    ingredients: { type: GraphQLString },
-    thumbnail: { type: GraphQLString },
-  }),
-}));
-
+const recipeType = new GraphQLList(
+  new GraphQLObjectType({
+    name: "recipe",
+    fields: () => ({
+      title: { type: GraphQLString },
+      href: { type: GraphQLString },
+      ingredients: { type: GraphQLString },
+      thumbnail: { type: GraphQLString }
+    })
+  })
+);
 
 const queryType = new GraphQLObjectType({
   name: "Query",
@@ -21,18 +27,20 @@ const queryType = new GraphQLObjectType({
     recipes: {
       type: recipeType,
       args: {
-        ingredients: { type: GraphQLList(GraphQLString) },
+        ingredients: { type: GraphQLList(GraphQLString) }
       },
-      resolve: (_, { ingredients }: queryArgs ) => [({
-        title: 'Hi',
-        href: 'Hello',
-        ingredients: ingredients.join(","),
-        thumbnail: 'asjk',
-      })]
-    },
-  }),
+      resolve: (_, { ingredients }: queryArgs) => [
+        {
+          title: "Hi",
+          href: "Hello",
+          ingredients: ingredients.join(","),
+          thumbnail: "asjk"
+        }
+      ]
+    }
+  })
 });
 
-const schema = new GraphQLSchema({ query: queryType })
+const schema = new GraphQLSchema({ query: queryType });
 
 export default schema;
