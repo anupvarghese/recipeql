@@ -45,7 +45,7 @@ const queryType = new GraphQLObjectType({
         ingredients: { type: GraphQLList(GraphQLString) },
         page: { type: GraphQLInt }
       },
-      resolve: (_, { ingredients, dish, page = 1 }: IQueryArgs) => {
+      resolve: async (_, { ingredients, dish, page = 1 }: IQueryArgs) => {
         const query = qs.stringify({
           i: ingredients.join(","),
           p: page,
