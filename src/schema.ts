@@ -52,16 +52,19 @@ const queryType = new GraphQLObjectType({
           q: dish
         });
         const url = `http://www.recipepuppy.com/api?${query}`;
-        return axios.get<IRecipeResponse>(url).then(res => {
-          return res.data.results;
-        }).catch(() => {
-          return [];
-        });
+        return axios
+          .get<IRecipeResponse>(url)
+          .then(res => {
+            return res.data.results;
+          })
+          .catch(() => {
+            return [];
+          });
       },
-      type: recipeType,
-    },
+      type: recipeType
+    }
   }),
-  name: "Query",
+  name: "Query"
 });
 
 const schema = new GraphQLSchema({ query: queryType });
