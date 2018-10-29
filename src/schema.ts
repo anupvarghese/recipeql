@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  GraphQLInt,
   GraphQLList,
   GraphQLObjectType,
   GraphQLSchema,
@@ -32,32 +33,35 @@ const recipeType = new GraphQLList(
       thumbnail: { type: GraphQLString },
       title: { type: GraphQLString }
     }),
-    name: "recipe",
+    name: "recipe"
   })
 );
 
 const queryType = new GraphQLObjectType({
   fields: () => ({
-    name: "Query",
     recipes: {
       args: {
         dish: { type: GraphQLString },
         ingredients: { type: GraphQLList(GraphQLString) },
+        page: { type: GraphQLInt }
       },
       resolve: (_, { ingredients, dish, page = 1 }: IQueryArgs) => {
         const query = qs.stringify({
           i: ingredients.join(","),
           p: page,
-          q: dish,
+          q: dish
         });
         const url = `http://www.recipepuppy.com/api?${query}`;
         return axios.get<IRecipeResponse>(url).then(res => {
           return res.data.results;
+        }).catch(() => {
+          return [];
         });
       },
       type: recipeType,
     },
-  })
+  }),
+  name: "Query",
 });
 
 const schema = new GraphQLSchema({ query: queryType });
