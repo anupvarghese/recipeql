@@ -3,9 +3,7 @@
   "linterOptions": {
     "exclude": ["node_modules/**/*.ts"]
   },
-  "rulesDirectory": [
-    "tslint-plugin-prettier"
-  ],
+  "rulesDirectory": ["tslint-plugin-prettier"],
   "rules": {
     "prettier": true
   }
